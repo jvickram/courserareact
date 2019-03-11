@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody,
+import { Card, CardImg, CardImgOverlay,
     CardTitle } from 'reactstrap';
+import DishdetailComponent from "./DishdetailComponent";
+
 
 class MenuComponent extends Component {
     constructor(props){
@@ -21,13 +23,7 @@ class MenuComponent extends Component {
     renderDish(dish) {
         if (dish != null)
             return(
-                <Card>
-                    <CardImg top src={dish.image} alt={dish.name} />
-                    <CardBody>
-                      <CardTitle>{dish.name}</CardTitle>
-                      <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
+                <DishdetailComponent dish={dish}/>
             );
         else
             return(
@@ -38,13 +34,15 @@ class MenuComponent extends Component {
   render() {
     const menu = this.props.dishes.map((dish) => {
         return (
-            <Card key={dish.id}
+            <div  className="col-12 col-md-5 m-1" key={dish.id}>
+            <Card 
               onClick={() => this.onDishSelect(dish)}>
               <CardImg width="100%" src={dish.image} alt={dish.name} />
               <CardImgOverlay>
                   <CardTitle>{dish.name}</CardTitle>
               </CardImgOverlay>
             </Card>
+            </div>
           );
     });
     
@@ -53,16 +51,10 @@ class MenuComponent extends Component {
     return (
         <div className="container">
                 <div className="row">
-                    <div  className="col-12 col-md-5 m-1">
-                        {menu}
-                    </div>
+                    {menu}
                 </div>
-                <div className="row">
-                  <div  className="col-12 col-md-5 m-1">
-                    {this.renderDish(this.state.selectedDish)}
-                  </div>
-                </div>
-            </div>
+                {this.renderDish(this.state.selectedDish)}
+        </div>
     )
   }
 
