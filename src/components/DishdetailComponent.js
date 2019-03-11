@@ -34,20 +34,21 @@ class DishDetail extends Component {
 
   render() {
     const { dish } = this.props;
-    const dishComments = dish.comments;
     
     if (dish != null) {
       return(
-        <div className="row">
-          <div className="dishDetail col-12 col-md-5 m-1">
-            {this.renderDish(dish)}
-          </div>
-          <div className="comments col-12 col-md-5 m-1">
-            <h4>Comments</h4>
-            <ul className="list-unstyled">
-              {this.renderComments(dishComments)}
-            </ul>
-          </div>
+          <div className="container">
+            <div className="row">
+            <div className="dishDetail col-12 col-md-5 m-1">
+                {this.renderDish(dish)}
+            </div>
+            <div className="comments col-12 col-md-5 m-1">
+                <h4>Comments</h4>
+                <ul className="list-unstyled">
+                {this.renderComments(dish.comments)}
+                </ul>
+            </div>
+            </div>
         </div>
       );
     } else {
