@@ -21,7 +21,6 @@ class Main extends Component {
         comments: COMMENTS,
         promotions: PROMOTIONS,
         leaders: LEADERS
-        
     };
   }
 
@@ -52,7 +51,7 @@ class Main extends Component {
           <Route path='/home' component={HomePage} />
           <Route path='/aboutus' component={() => <About leaders= {this.state.leaders} />} />
           <Route exact path="/menu" component={() => <Menu dishes = { this.state.dishes} />} />
-          <Route exact path="/menu/:dishId" component={DishWithId} />} />
+          <Route exact path="/menu/:dishId" component={DishWithId} />
           <Route exact path='/contactus' component={Contact} />
           <Redirect to ="/home" /> 
         </Switch>
