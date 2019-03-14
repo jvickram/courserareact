@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom';
 
 function RenderLeader({lead}) {
     return(
-      <Media key={lead.id}>
-        <Media left>
-            <Media object src={lead.image} alt={lead.name} />
+        <Media key={lead.id}>
+        <Media left middle>
+            <Media object src = {lead.image} alt = {lead.name} />
         </Media>
-        <Media body>
-          <Media heading>{lead.name}</Media>
-          <Media>{lead.designation}</Media>
-          {lead.description}
+        <Media body className = "ml-5">
+            <Media heading>{lead.name}</Media>
+            <p>{lead.designation}</p>
+            <p>{lead.description}</p>
         </Media>
-      </Media>
+    </Media>
     );
   }
 
@@ -82,7 +82,6 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                    {/* < RenderLeader leaders = {props.leaders} /> */}
                     {leaders}
                     </Media>
                 </div>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
   function RenderDish({dish}) {
     return(
-      <Card dish={dish}>
+      <Card key={dish.id}>
         <CardImg src={dish.image} alt={dish.name} />
         <CardBody>
           <CardTitle>{dish.name}</CardTitle>
