@@ -19,8 +19,10 @@ class CommentForm extends Component{
     }
 
     handleSubmit(values) {
-      console.log('Current State is: ' + JSON.stringify(values));
-      alert('Current State is: ' + JSON.stringify(values));
+      this.toggleModal();
+      // console.log('Current State is: ' + JSON.stringify(values));
+      // alert('Current State is: ' + JSON.stringify(values));
+      this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   }   
 
   toggleModal(){
@@ -55,8 +57,8 @@ class CommentForm extends Component{
               </Row>
               <Row className="form-group">
                 <Col md={12}>
-                  <Label htmlFor="yourname">Your Name</Label>
-                  <Control.text model=".yourname" id="yourname" name="yourname"
+                  <Label htmlFor="author">Your Name</Label>
+                  <Control.text model=".author" id="author" name="author"
                       placeholder="Your Name"
                       className="form-control"
                       validators={{
@@ -65,7 +67,7 @@ class CommentForm extends Component{
                    />
                   <Errors
                     className="text-danger"
-                    model=".yourname"
+                    model=".author"
                     show="touched"
                     messages={{
                       required: 'Required',
@@ -110,16 +112,26 @@ class CommentForm extends Component{
     );
   }
 
-  function RenderComments({comments}) {
+  function RenderComments({comments, addComment, dishId}) {
     const renderedComments = comments.map((comment) =>
-        <li key={comment.id}>
-          <p>{comment.comment}</p>
-          <p>-- {comment.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long', day: '2-digit'}).format(new Date(comment.date))}</p>
+    <div  key={comment.id}>
+      <ul className="list-unstyled">
+        <li >
+            <p>{comment.comment}</p>
+            <p>-- {comment.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long', day: '2-digit'}).format(new Date(comment.date))}</p>
         </li>
+      </ul>
+    </div>
     );
 
     if (comments != null) {
-      return renderedComments;
+      return (
+        <div className="comments col-12 col-md-5 m-1">
+          <h4>Comments</h4>
+          {renderedComments}
+          <CommentForm dishId={dishId} addComment={addComment} />
+        </div>  
+        );
     } else {
       return(
         <div></div>
@@ -146,13 +158,10 @@ class CommentForm extends Component{
             <div className="dishDetail col-12 col-md-5 m-1">
                 <RenderDish dish = {dish} />
             </div>
-            <div className="comments col-12 col-md-5 m-1">
-                <h4>Comments</h4>
-                <ul className="list-unstyled">
-                <RenderComments comments = {props.comments} />
-                <CommentForm/>
-                </ul>
-            </div>
+                <RenderComments comments = {props.comments} 
+                  addComment = {props.addComment}
+                  dishId={props.dish.id}
+                />
             </div>
         </div>
       );
