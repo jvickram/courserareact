@@ -24,7 +24,7 @@ class CommentForm extends Component{
       this.toggleModal();
       // console.log('Current State is: ' + JSON.stringify(values));
       // alert('Current State is: ' + JSON.stringify(values));
-      this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+      this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
   }   
 
   toggleModal(){
@@ -38,7 +38,7 @@ class CommentForm extends Component{
         <div className="col-12 col-md-9">
           <Button outline onClick={this.toggleModal}>
             <span className="fa fa-pencil fa-lg"> </span> 
-             Comment
+             Submit Comment
           </Button>
           <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
             <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
@@ -114,7 +114,7 @@ class CommentForm extends Component{
     );
   }
 
-  function RenderComments({comments, addComment, dishId}) {
+  function RenderComments({comments, postComment, dishId}) {
     const renderedComments = comments.map((comment) =>
     <div  key={comment.id}>
       <ul className="list-unstyled">
@@ -131,7 +131,7 @@ class CommentForm extends Component{
         <div className="comments col-12 col-md-5 m-1">
           <h4>Comments</h4>
           {renderedComments}
-          <CommentForm dishId={dishId} addComment={addComment} />
+          <CommentForm dishId={dishId} postComment={postComment} />
         </div>  
         );
     } else {
@@ -178,7 +178,7 @@ class CommentForm extends Component{
                 <RenderDish dish = {dish} />
             </div>
                 <RenderComments comments = {props.comments} 
-                  addComment = {props.addComment}
+                  postComment = {props.postComment}
                   dishId={props.dish.id}
                 />
             </div>
