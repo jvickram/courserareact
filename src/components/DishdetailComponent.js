@@ -5,6 +5,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -104,33 +105,43 @@ class CommentForm extends Component{
 
   function RenderDish({dish}) {
     return(
-      <Card key={dish.id}>
-        <CardImg src={baseUrl + dish.image} alt={dish.name} />
-        <CardBody>
-          <CardTitle>{dish.name}</CardTitle>
-          <CardText>{dish.description}</CardText>
-        </CardBody>
-      </Card>
+      <FadeTransform in 
+                transformProps = {{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+                <Card key={dish.id}>
+                  <CardImg src={baseUrl + dish.image} alt={dish.name} />
+                  <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
+                  </CardBody>
+                </Card>
+      </FadeTransform>
     );
   }
 
   function RenderComments({comments, postComment, dishId}) {
-    const renderedComments = comments.map((comment) =>
-    <div  key={comment.id}>
-      <ul className="list-unstyled">
-        <li >
-            <p>{comment.comment}</p>
-            <p>-- {comment.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long', day: '2-digit'}).format(new Date(comment.date))}</p>
-        </li>
-      </ul>
-    </div>
+    const renderedComments = comments.map((comment) => {
+    return (
+      <Fade in key={comment.id}>
+          <li>
+              <p>{comment.comment}</p>
+              <p>-- {comment.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long', day: '2-digit'}).format(new Date(comment.date))}</p>
+          </li>
+      </Fade>
+      );
+      }
     );
 
     if (comments != null) {
       return (
         <div className="comments col-12 col-md-5 m-1">
           <h4>Comments</h4>
-          {renderedComments}
+            <ul className="list-unstyled">
+            <Stagger in>
+              {renderedComments}
+            </Stagger>
+            </ul>
           <CommentForm dishId={dishId} postComment={postComment} />
         </div>  
         );
