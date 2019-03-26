@@ -21,7 +21,6 @@ class Contact extends Component {
         alert('Current State is: ' + JSON.stringify(values));
         this.props.resetFeedbackForm();
     }   
-
     render(){
         return(
             <div className="container">
